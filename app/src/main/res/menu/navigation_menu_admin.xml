@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+
+        <item android:id="@+id/feed"
+            android:title="Feed de Notícias"
+            android:icon="@mipmap/ic_new_releases_black_24dp"/>
+
+        <item android:id="@+id/chat"
+            android:title="@string/q_a"
+            android:icon="@mipmap/ic_send_black_24dp"/>
+
+        <item android:id="@+id/multimedia"
+            android:title="Galeria"
+            android:icon="@mipmap/ic_photo_library_black_24dp"/>
+
+        <item android:id="@+id/study"
+            android:title="Recursos de Estudo"
+            android:icon="@mipmap/ic_library_books_black_24dp"/>
+
+        <item android:id="@+id/horarios"
+            android:title="Horários"
+            android:icon="@mipmap/ic_alarm_black_24dp"/>
+
+        <item android:id="@+id/logout"
+            android:title="Terminar Sessão"
+            android:icon="@mipmap/ic_power_settings_new_black_24dp"/>
+    </group>
+
+
+</menu>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".FeedFragAdmin">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+
+            android:layout_below="@+id/list_of_posts"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="-47dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:src="@drawable/ic_post"
+            android:tint="@android:color/white"
+            app:fabSize="mini">
+
+        </android.support.design.widget.FloatingActionButton>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/list_of_posts"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="56dp"
+            android:divider="@android:color/transparent"
+            android:layout_marginBottom="54dp"
+            android:background="@drawable/bottom_border">
+
+        </android.support.v7.widget.RecyclerView>
+
+    </RelativeLayout>
+
+</FrameLayout>
