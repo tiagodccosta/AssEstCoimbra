@@ -23,11 +23,13 @@
             android:focusable="true"
             android:src="@drawable/ic_post"
             android:tint="@android:color/white"
-            app:fabSize="mini">
+            app:elevation="24dp"
+            app:fabSize="mini"
+            app:rippleColor="@color/colorBackDialog">
 
         </android.support.design.widget.FloatingActionButton>
 
-        <android.support.v7.widget.RecyclerView
+        <ListView
             android:id="@+id/list_of_posts"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -35,10 +37,10 @@
             android:layout_alignParentTop="true"
             android:layout_marginTop="56dp"
             android:divider="@android:color/transparent"
-            android:layout_marginBottom="54dp"
-            android:background="@drawable/bottom_border">
+            android:background="@drawable/bottom_border"
+            android:dividerHeight="20dp">
 
-        </android.support.v7.widget.RecyclerView>
+        </ListView>
 
     </RelativeLayout>
 

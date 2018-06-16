@@ -1,12 +1,30 @@
 package tiagodccosta.assestcoimbra;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
+import android.widget.AdapterView;
+import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.TextView;
+
+import com.firebase.ui.database.FirebaseListAdapter;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -28,6 +46,19 @@ public class StudyFrag extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+
+    private FirebaseListAdapter<UploadInfo> adapter;
+
+    private FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+    private DatabaseReference databaseReference = firebaseDatabase.getReference("Recursos");
+
+    private ListView listView;
+
+    private TextView descricao;
+    private ImageView post;
+
+    private List<UploadInfo> posts;
+
 
     public StudyFrag() {
         // Required empty public constructor
@@ -64,8 +95,82 @@ public class StudyFrag extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_study, container, false);
+
+        final View rootView = inflater.inflate(R.layout.fragment_study, container, false);
+
+        listView = (ListView) rootView.findViewById(R.id.list_of_resources);
+
+        posts = new ArrayList<>();
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                UploadInfo uploadInfo = posts.get(i);
+
+                Intent intent = new Intent();
+                intent.setType(Intent.ACTION_VIEW);
+                intent.setData(Uri.parse(uploadInfo.getUrl()));
+                startActivity(intent);
+            }
+        });
+
+
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                posts.clear();
+
+                for(DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                    UploadInfo uploadInfo = postSnapshot.getValue(UploadInfo.class);
+                    posts.add(uploadInfo);
+                }
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {}
+        });
+
+
+        databaseReference.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                displayResources();
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {}
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {}
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {}
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {}
+        });
+
+        return rootView;
     }
+
+    private void displayResources() {
+        final ListView listOfPosts;
+        listOfPosts = (ListView) getActivity().findViewById(R.id.list_of_resources);
+        adapter = new FirebaseListAdapter<UploadInfo>(getActivity(), UploadInfo.class, R.layout.list_resources, FirebaseDatabase.getInstance().getReference("Recursos")) {
+            @Override
+            protected void populateView(View v, UploadInfo model, int position) {
+
+                descricao = (TextView) v.findViewById(R.id.resourceTitle);
+
+                descricao.setText(model.getDescricao());
+
+            }
+        };
+        listOfPosts.setTranscriptMode(AbsListView.TRANSCRIPT_MODE_ALWAYS_SCROLL);
+        listOfPosts.setAdapter(adapter);
+    }
+
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {

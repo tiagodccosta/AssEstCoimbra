@@ -7,7 +7,7 @@
     <color name="colorBack">#dbddde</color>
     <color name="colorChatInput">#eaeaea</color>
     <color name="colorBackDialog">#ff9544</color>
-
+    <color name="colorBTN">#ff5f62</color>
 
 
 </resources>

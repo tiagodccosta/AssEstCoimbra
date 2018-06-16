@@ -2,21 +2,19 @@ package tiagodccosta.assestcoimbra;
 
 import android.content.ContentResolver;
 import android.content.Intent;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.provider.MediaStore;
-import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -30,15 +28,15 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.InputStream;
 
-public class Chooser extends AppCompatActivity {
+public class Chooser2 extends AppCompatActivity {
 
     private Button btnPartilhar;
     private Button btnBack;
-    private EditText descricao;
     private ImageView post;
+    private Spinner spinnerAnos;
+    private Spinner spinnerCursos;
 
     FirebaseAuth firebaseAuth;
     FirebaseStorage firebaseStorage;
@@ -63,33 +61,34 @@ public class Chooser extends AppCompatActivity {
                 post.setImageBitmap(selectedImage);
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
-                Toast.makeText(Chooser.this, "Algo deu errado!", Toast.LENGTH_LONG).show();
+                Toast.makeText(Chooser2.this, "Algo deu errado!", Toast.LENGTH_LONG).show();
             }
 
         }else {
-            Toast.makeText(Chooser.this, "Tens de escolher uma imagem!",Toast.LENGTH_LONG).show();
+            Toast.makeText(Chooser2.this, "Tens de escolher uma imagem!",Toast.LENGTH_LONG).show();
         }
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_chooser);
+        setContentView(R.layout.activity_chooser2);
 
         firebaseStorage = FirebaseStorage.getInstance();
 
         firebaseAuth = FirebaseAuth.getInstance();
 
-        storageReference = firebaseStorage.getReference("Feed Posts");
+        storageReference = firebaseStorage.getReference("Horarios");
 
-        databaseReference = FirebaseDatabase.getInstance().getReference("Feed Posts");
+        databaseReference = FirebaseDatabase.getInstance().getReference("Horarios");
 
 
         btnBack = (Button) findViewById(R.id.btnBack);
         btnPartilhar = (Button) findViewById(R.id.btnPartilhar);
-        descricao = (EditText) findViewById(R.id.descrição);
         post = (ImageView) findViewById(R.id.postImage);
         mProgressBar = (ProgressBar) findViewById(R.id.progressBar);
+        spinnerAnos = (Spinner) findViewById(R.id.spinnerAnos);
+        spinnerCursos = (Spinner) findViewById(R.id.spinnerCursos);
 
         post.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -103,7 +102,7 @@ public class Chooser extends AppCompatActivity {
         btnPartilhar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (validate()) {
+                if(validate()) {
                     sendData();
                 }
             }
@@ -113,22 +112,22 @@ public class Chooser extends AppCompatActivity {
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(Chooser.this, AdminActivity.class));
+                startActivity(new Intent(Chooser2.this, AdminActivity.class));
             }
         });
     }
 
-
     private Boolean validate() {
         Boolean result = false;
 
-        if( imageUri == null || descricao == null) {
-            Toast.makeText(Chooser.this, "Tens de preencher todos os detalhes", Toast.LENGTH_SHORT).show();
+        if( imageUri == null) {
+            Toast.makeText(Chooser2.this, "Tens de preencher todos os detalhes", Toast.LENGTH_SHORT).show();
         } else {
             result = true;
         }
         return result;
     }
+
 
     public String getImagExt(Uri uri) {
 
@@ -139,24 +138,32 @@ public class Chooser extends AppCompatActivity {
     }
 
     private void sendData() {
-        mref = storageReference.child(System.currentTimeMillis()+"."+getImagExt(imageUri));
+        if(imageUri != null) {
+            mref = storageReference.child(System.currentTimeMillis()+"."+getImagExt(imageUri));
+        } else {
+            Toast.makeText(Chooser2.this, "Tens de preencher todos os detalhes", Toast.LENGTH_SHORT).show();
+        }
+
+        final String ano = spinnerAnos.getSelectedItem().toString();
+        final String curso = spinnerCursos.getSelectedItem().toString();
 
         UploadTask uploadTask = mref.putFile(imageUri);
         uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                Toast.makeText(Chooser.this, "Partilhado com sucesso!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(Chooser2.this, "Partilhado com sucesso!", Toast.LENGTH_SHORT).show();
                 String uploadId = databaseReference.push().getKey();
-                UploadInfo uploadInfo = new UploadInfo(descricao.getText().toString(), taskSnapshot.getDownloadUrl().toString(), uploadId);
+
+                UploadInfo uploadInfo = new UploadInfo(ano + " " + curso, taskSnapshot.getDownloadUrl().toString(), uploadId);
                 databaseReference.child(uploadId).setValue(uploadInfo);
 
-                startActivity(new Intent(Chooser.this, AdminActivity.class));
+                startActivity(new Intent(Chooser2.this, AdminActivity.class));
                 finish();
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Toast.makeText(Chooser.this, "Falha ao partilhar!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(Chooser2.this, "Falha ao partilhar!", Toast.LENGTH_SHORT).show();
             }
         }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
             @Override

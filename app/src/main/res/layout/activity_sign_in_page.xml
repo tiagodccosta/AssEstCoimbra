@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -13,7 +14,13 @@
         android:layout_height="135dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="28dp"
+        android:layout_marginEnd="57dp"
+        android:layout_marginStart="58dp"
+        android:layout_marginTop="35dp"
+        app:layout_constraintBottom_toTopOf="@+id/textView2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/logo3" />
 
     <EditText
@@ -22,13 +29,20 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="244dp"
+        android:layout_marginBottom="19dp"
+        android:layout_marginEnd="84dp"
+        android:layout_marginStart="85dp"
+        android:layout_marginTop="10dp"
         android:ems="10"
         android:fontFamily="monospace"
         android:hint="Email"
         android:inputType="textPersonName"
         android:textAlignment="textStart"
-        android:textColor="@android:color/background_light" />
+        android:textColor="@android:color/background_light"
+        app:layout_constraintBottom_toTopOf="@+id/passField"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
 
     <TextView
@@ -37,12 +51,20 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="179dp"
+        android:layout_marginBottom="39dp"
+        android:layout_marginEnd="66dp"
+        android:layout_marginStart="66dp"
+        android:layout_marginTop="14dp"
         android:fontFamily="monospace"
         android:text="Iniciar Sessão"
         android:textAppearance="@style/TextAppearance.AppCompat.Display3"
         android:textColor="@android:color/darker_gray"
-        android:textSize="30sp" />
+        android:textSize="30sp"
+        app:layout_constraintBottom_toTopOf="@+id/nameField"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView5" />
 
     <EditText
         android:id="@+id/passField"
@@ -50,11 +72,18 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/nameField"
         android:layout_centerHorizontal="true"
+        android:layout_marginBottom="48dp"
+        android:layout_marginEnd="84dp"
+        android:layout_marginStart="85dp"
         android:ems="10"
         android:fontFamily="monospace"
         android:hint="Password"
         android:inputType="textPassword"
-        android:textColor="@android:color/background_light" />
+        android:textColor="@android:color/background_light"
+        app:layout_constraintBottom_toTopOf="@+id/btnSignIn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/nameField" />
 
     <Button
         android:id="@+id/btnSignIn"
@@ -62,7 +91,14 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="156dp"
-        android:text="Iniciar Sessão" />
+        android:layout_marginBottom="108dp"
+        android:layout_marginEnd="112dp"
+        android:layout_marginStart="113dp"
+        android:layout_marginTop="48dp"
+        android:text="Iniciar Sessão"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/passField" />
 
-</RelativeLayout>
+</android.support.constraint.ConstraintLayout>

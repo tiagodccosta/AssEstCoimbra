@@ -10,7 +10,15 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
+import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.firebase.ui.database.FirebaseListAdapter;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -41,14 +49,18 @@ public class FeedFrag extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    DatabaseReference databaseReference;
-    private List<UploadInfo> mUploads;
-    private RecyclerView mRecyclerView;
-    private ImageListAdapter adapter;
+
+    private FirebaseListAdapter<UploadInfo> adapter;
     private FloatingActionButton fab;
 
-    public static View rootView;
+    private  FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+    private DatabaseReference databaseReference = firebaseDatabase.getReference("Feed Posts");
 
+    private ListView listView;
+
+    public static View rootView;
+    private TextView descricao;
+    private ImageView post;
 
 
     public FeedFrag() {
@@ -87,39 +99,55 @@ public class FeedFrag extends Fragment {
                              Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_feed, container, false);
 
-        databaseReference = FirebaseDatabase.getInstance().getReference("Feed Posts");
-
-        mUploads = new ArrayList<>();
-        mRecyclerView = (RecyclerView) rootView.findViewById(R.id.list_of_posts);
-        mRecyclerView.setHasFixedSize(true);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        listView = (ListView) rootView.findViewById(R.id.list_of_posts);
 
 
-
-        databaseReference.addValueEventListener(new ValueEventListener() {
+        databaseReference.addChildEventListener(new ChildEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for(DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    UploadInfo img = snapshot.getValue(UploadInfo.class);
-                    mUploads.add(0, img);
-                }
-
-
-
-
-                adapter = new ImageListAdapter(getActivity(), mUploads);
-                mRecyclerView.setAdapter(adapter);
-
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                displayFeed();
             }
 
             @Override
-            public void onCancelled(DatabaseError databaseError) {
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {}
 
-            }
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {}
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {}
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {}
         });
+
 
         return rootView;
     }
+
+    private void displayFeed() {
+        final ListView listOfPosts;
+        listOfPosts = (ListView) getActivity().findViewById(R.id.list_of_posts);
+        adapter = new FirebaseListAdapter<UploadInfo>(getActivity(), UploadInfo.class, R.layout.list_feed, FirebaseDatabase.getInstance().getReference("Feed Posts")) {
+            @Override
+            protected void populateView(View v, UploadInfo model, int position) {
+
+                descricao = (TextView) v.findViewById(R.id.titlePost);
+                post = (ImageView) v.findViewById(R.id.postImage);
+
+                descricao.setText(model.getDescricao());
+                Glide.with(getContext())
+                        .load(model.getUrl())
+                        .fitCenter()
+                        .centerCrop()
+                        .into(post);
+
+            }
+        };
+        listOfPosts.setAdapter(adapter);
+        listOfPosts.setTranscriptMode(AbsListView.TRANSCRIPT_MODE_ALWAYS_SCROLL);
+    }
+
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {

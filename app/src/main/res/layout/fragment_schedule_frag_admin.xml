@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -9,14 +10,36 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
+
+        <ListView
+            android:id="@+id/list_of_schedules"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="56dp"
+            android:divider="@android:color/transparent"
+            android:background="@color/colorChatInput"
+            android:dividerHeight="20dp"/>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+
+            android:layout_below="@+id/list_of_schedules"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="216dp"
-            android:text="Schedule Admin"
-            android:textSize="60sp" />
+            android:layout_marginTop="-47dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:src="@drawable/ic_alarm"
+            android:tint="@android:color/background_light"
+            app:backgroundTint="@color/colorBackDialog"
+            app:elevation="24dp"
+            app:fabSize="mini"
+            app:rippleColor="@color/colorActionBar">
+
+        </android.support.design.widget.FloatingActionButton>
+
 
     </RelativeLayout>
 

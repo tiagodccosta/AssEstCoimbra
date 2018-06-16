@@ -16,12 +16,16 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="219dp"
+            android:layout_marginTop="220dp"
             android:fontFamily="monospace"
             android:text="Os Meus Dados"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:textColor="@color/colorActionBar"
-            android:textSize="30sp" />
+            android:textSize="30sp"
+            app:layout_constraintBottom_toTopOf="@+id/userNameP"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView2" />
 
         <ImageView
             android:id="@+id/imageView2"
@@ -29,7 +33,11 @@
             android:layout_height="152dp"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="57dp"
+            android:layout_marginTop="58dp"
+            app:layout_constraintBottom_toTopOf="@+id/Title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/logo3" />
 
         <Button
@@ -38,89 +46,115 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="31dp"
+            android:layout_marginBottom="38dp"
             android:background="@color/colorActionBar"
             android:text="Guardar"
-            android:textColor="@android:color/background_light" />
+            android:textColor="@android:color/background_light"
+            tools:layout_editor_absoluteX="113dp"
+            tools:layout_editor_absoluteY="503dp" />
 
         <TextView
             android:id="@+id/textView3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginBottom="259dp"
-            android:layout_marginStart="22dp"
+            android:layout_marginBottom="257dp"
+            android:layout_toStartOf="@+id/Title"
             android:fontFamily="monospace"
             android:text="Nome:"
             android:textColor="@color/colorActionBar"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            app:layout_constraintBottom_toTopOf="@+id/textView4"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/userNameP"
+            app:layout_constraintVertical_bias="0.79" />
 
         <TextView
             android:id="@+id/textView4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginBottom="189dp"
-            android:layout_marginStart="15dp"
+            android:layout_alignStart="@+id/textView3"
+            android:layout_marginBottom="194dp"
             android:fontFamily="monospace"
             android:paddingStart="2dp"
             android:text="Curso:"
             android:textColor="@color/colorActionBar"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            app:layout_constraintBottom_toTopOf="@+id/userAno"
+            app:layout_constraintEnd_toStartOf="@+id/cursoFieldP"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/userNameP"
+            app:layout_constraintVertical_bias="1.0" />
 
         <TextView
             android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_marginBottom="118dp"
-            android:layout_toStartOf="@+id/Title"
+            android:layout_alignStart="@+id/textView3"
+            android:layout_marginBottom="130dp"
             android:fontFamily="monospace"
             android:paddingStart="2dp"
             android:text="Ano:"
             android:textColor="@color/colorActionBar"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            tools:layout_editor_absoluteX="16dp"
+            tools:layout_editor_absoluteY="462dp" />
 
         <EditText
             android:id="@+id/userNameP"
             android:layout_width="294dp"
             android:layout_height="wrap_content"
             android:layout_alignBaseline="@+id/textView3"
-            android:layout_toEndOf="@+id/textView3"
+            android:layout_alignStart="@+id/Title"
             android:ems="10"
             android:fontFamily="monospace"
             android:inputType="textPersonName"
             android:textAppearance="@style/TextAppearance.AppCompat"
             android:textColor="@color/colorPrimaryDark"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/Title" />
 
         <EditText
             android:id="@+id/userAno"
             android:layout_width="302dp"
             android:layout_height="wrap_content"
             android:layout_alignBaseline="@+id/textView"
-            android:layout_alignParentEnd="true"
+            android:layout_toEndOf="@+id/textView"
             android:ems="10"
             android:fontFamily="monospace"
             android:inputType="textPersonName"
             android:textAppearance="@style/TextAppearance.AppCompat"
             android:textColor="@color/colorPrimaryDark"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            tools:layout_editor_absoluteX="66dp"
+            tools:layout_editor_absoluteY="443dp" />
 
         <EditText
             android:id="@+id/cursoFieldP"
             android:layout_width="286dp"
             android:layout_height="wrap_content"
             android:layout_alignBaseline="@+id/textView4"
+            android:layout_marginBottom="30dp"
+            android:layout_marginTop="32dp"
             android:layout_toEndOf="@+id/textView4"
             android:ems="10"
             android:fontFamily="monospace"
             android:inputType="textPersonName"
             android:textAppearance="@style/TextAppearance.AppCompat"
             android:textColor="@color/colorPrimaryDark"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            app:layout_constraintBottom_toTopOf="@+id/userAno"
+            app:layout_constraintTop_toBottomOf="@+id/userNameP"
+            app:layout_constraintVertical_bias="1.0"
+            tools:layout_editor_absoluteX="90dp" />
 
     </RelativeLayout>
 

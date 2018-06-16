@@ -91,9 +91,7 @@ public class ChatAdmin extends Fragment {
             }
 
             @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
+            public void onCancelled(DatabaseError databaseError) {}
         });
 
 

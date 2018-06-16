@@ -14,4 +14,17 @@
     <string name="schedule">Schedule</string>
     <string name="admin"><b>Administrador: </b></string>
     <string name="q_a"><![CDATA[Q&A]]></string>
+
+    <array name="anos">
+        <item>10º Ano</item>
+        <item>11º Ano</item>
+        <item>12º Ano</item>
+    </array>
+
+    <array name="cursos">
+        <item>Ciências e Tecnologia</item>
+        <item>Humanidades</item>
+        <item>Artes</item>
+    </array>
+
 </resources>
