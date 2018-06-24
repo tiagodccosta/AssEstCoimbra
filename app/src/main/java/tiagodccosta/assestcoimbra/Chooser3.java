@@ -54,7 +54,7 @@ public class Chooser3 extends AppCompatActivity {
         if (resultCode == RESULT_OK) {
             imageUri = data.getData();
         }else {
-            Toast.makeText(Chooser3.this, "Tens de escolher uma imagem!",Toast.LENGTH_LONG).show();
+            Toast.makeText(Chooser3.this, "Tens de escolher um ficheiro!",Toast.LENGTH_LONG).show();
         }
     }
 

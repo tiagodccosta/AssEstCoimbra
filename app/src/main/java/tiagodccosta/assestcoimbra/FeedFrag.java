@@ -7,6 +7,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -61,6 +62,7 @@ public class FeedFrag extends Fragment {
     public static View rootView;
     private TextView descricao;
     private ImageView post;
+    private TextView time;
 
 
     public FeedFrag() {
@@ -134,8 +136,10 @@ public class FeedFrag extends Fragment {
 
                 descricao = (TextView) v.findViewById(R.id.titlePost);
                 post = (ImageView) v.findViewById(R.id.postImage);
+                time = (TextView) v.findViewById(R.id.timePost);
 
                 descricao.setText(model.getDescricao());
+                time.setText(DateFormat.format("dd-MM-yyyy (HH:mm:ss)", model.getPostTime()));
                 Glide.with(getContext())
                         .load(model.getUrl())
                         .fitCenter()

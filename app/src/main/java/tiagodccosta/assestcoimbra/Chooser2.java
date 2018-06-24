@@ -65,7 +65,7 @@ public class Chooser2 extends AppCompatActivity {
             }
 
         }else {
-            Toast.makeText(Chooser2.this, "Tens de escolher uma imagem!",Toast.LENGTH_LONG).show();
+            Toast.makeText(Chooser2.this, "Tens de escolher um horário!",Toast.LENGTH_LONG).show();
         }
     }
 

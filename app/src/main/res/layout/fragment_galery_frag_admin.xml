@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -7,17 +8,43 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_marginTop="56dp">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+
+            android:layout_below="@+id/list_of_photos"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="216dp"
-            android:text="Galery Admin"
-            android:textSize="60sp" />
+            android:layout_marginTop="-47dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:src="@drawable/ic_post"
+            android:tint="@android:color/white"
+            app:backgroundTint="@android:color/holo_purple"
+            app:elevation="24dp"
+            app:fabSize="mini"
+            app:rippleColor="#52db4b">
 
+        </android.support.design.widget.FloatingActionButton>
+
+        
+        <GridView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/list_of_photos"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:columnWidth="100dp"
+            android:horizontalSpacing="5dp"
+            android:verticalSpacing="5dp"
+            android:numColumns="auto_fit"
+            android:stretchMode="columnWidth">
+
+        </GridView>
+        
     </RelativeLayout>
 
 </FrameLayout>

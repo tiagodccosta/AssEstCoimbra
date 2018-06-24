@@ -1,12 +1,30 @@
 package tiagodccosta.assestcoimbra;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
+import android.widget.AdapterView;
+import android.widget.GridView;
+import android.widget.ImageView;
+
+import com.bumptech.glide.Glide;
+import com.firebase.ui.database.FirebaseListAdapter;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -28,6 +46,15 @@ public class GaleryFrag extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+
+    private FirebaseListAdapter<UploadInfo> adapter;
+
+    private FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+    private DatabaseReference databaseReference = firebaseDatabase.getReference("Galeria");
+
+    private ImageView post;
+    private GridView gridView;
+    private List<UploadInfo> posts;
 
     public GaleryFrag() {
         // Required empty public constructor
@@ -65,12 +92,87 @@ public class GaleryFrag extends Fragment {
                              Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.fragment_galery, container, false);
 
+        gridView = (GridView) rootView.findViewById(R.id.list_of_photos);
+
+        posts = new ArrayList<>();
 
 
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                posts.clear();
+
+                for(DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                    UploadInfo uploadInfo = postSnapshot.getValue(UploadInfo.class);
+                    posts.add(uploadInfo);
+                }
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {}
+        });
+
+
+        databaseReference.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                displayGalery();
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {}
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {}
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {}
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {}
+        });
+
+
+
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                UploadInfo uploadInfo = posts.get(i);
+
+                Uri imageUri = Uri.parse(uploadInfo.getUrl());
+
+                Intent fullscreenIntent = new Intent(getContext(), FullscreenActivity.class);
+                fullscreenIntent.setData(imageUri);
+                startActivity(fullscreenIntent);
+            }
+        });
 
         // Inflate the layout for this fragment
         return rootView;
     }
+
+    private void displayGalery() {
+        final GridView listOfPosts;
+        listOfPosts = (GridView) getActivity().findViewById(R.id.list_of_photos);
+        adapter = new FirebaseListAdapter<UploadInfo>(getActivity(), UploadInfo.class, R.layout.list_galery, FirebaseDatabase.getInstance().getReference("Galeria")) {
+            @Override
+            protected void populateView(View v, UploadInfo model, int position) {
+
+                post = (ImageView) v.findViewById(R.id.postImage);
+
+                Glide.with(getContext())
+                        .load(model.getUrl())
+                        .fitCenter()
+                        .centerCrop()
+                        .into(post);
+            }
+        };
+        listOfPosts.setTranscriptMode(AbsListView.TRANSCRIPT_MODE_ALWAYS_SCROLL);
+        listOfPosts.setAdapter(adapter);
+    }
+
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {

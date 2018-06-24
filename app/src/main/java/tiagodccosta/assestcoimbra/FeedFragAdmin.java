@@ -41,6 +41,8 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -66,6 +68,8 @@ public class FeedFragAdmin extends Fragment {
     private ImageView post;
 
     private List<UploadInfo> posts;
+
+    private TextView time;
 
 
     public FeedFragAdmin() {
@@ -239,8 +243,10 @@ public class FeedFragAdmin extends Fragment {
 
                 descricao = (TextView) v.findViewById(R.id.titlePost);
                 post = (ImageView) v.findViewById(R.id.postImage);
+                time = (TextView) v.findViewById(R.id.timePost);
 
                 descricao.setText(model.getDescricao());
+                time.setText(DateFormat.format("dd-MM-yyyy (HH:mm:ss)", model.getPostTime()));
                 Glide.with(getContext())
                         .load(model.getUrl())
                         .fitCenter()

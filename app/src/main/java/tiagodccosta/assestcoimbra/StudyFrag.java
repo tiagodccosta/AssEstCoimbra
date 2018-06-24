@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -56,6 +57,7 @@ public class StudyFrag extends Fragment {
 
     private TextView descricao;
     private ImageView post;
+    private TextView time;
 
     private List<UploadInfo> posts;
 
@@ -162,8 +164,10 @@ public class StudyFrag extends Fragment {
             protected void populateView(View v, UploadInfo model, int position) {
 
                 descricao = (TextView) v.findViewById(R.id.resourceTitle);
+                time = (TextView) v.findViewById(R.id.resourceTime);
 
                 descricao.setText(model.getDescricao());
+                time.setText(DateFormat.format("dd-MM-yyyy", model.getPostTime()));
 
             }
         };

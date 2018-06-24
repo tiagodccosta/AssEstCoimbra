@@ -1,10 +1,14 @@
 package tiagodccosta.assestcoimbra;
 
+import java.util.Date;
+
 public class UploadInfo {
 
     public String descricao;
     public String url;
     public String key;
+    private long postTime;
+
 
     public UploadInfo() {
 
@@ -14,6 +18,8 @@ public class UploadInfo {
         this.descricao = descricao;
         this.url = url;
         this.key = key;
+
+        postTime = new Date().getTime();
     }
 
     public String getDescricao() {
@@ -26,6 +32,14 @@ public class UploadInfo {
 
     public String getKey() {
         return key;
+    }
+
+    public long getPostTime() {
+        return postTime;
+    }
+
+    public void setPostTime(long postTime) {
+        this.postTime = postTime;
     }
 
 }
